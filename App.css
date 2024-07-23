@@ -1,0 +1,5 @@
+.main-page{
+    
+    background-image: linear-gradient(150deg, blue,purple ,rgb(224, 46, 161) ,red,orange,yellow );
+    background-size: contain;
+}
