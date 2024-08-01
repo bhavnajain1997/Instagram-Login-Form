@@ -1,8 +1,10 @@
 import React from "react";
 import { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { INSTA_LOGO_BLACK, INSTA_LOGO_WHITE } from "../utilis/constant";
 import checkValidData from "../utilis/validate";
-import { useDispatch } from "react-redux";
+
+
 import Header from "./Header";
 
 import {
@@ -18,6 +20,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [darkMode , SetDarkMode] = useState(LIGHT_MODE);
   const [currentColor,setCurrentColor] = useState(false);
+  const [eyeShow, setEyeShow] = useState(false);
 
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -26,7 +29,6 @@ const Login = () => {
 
   const handleClickButton = () => {
     const message = checkValidData(email.current.value, password.current.value);
-    alert("Hello")
     setErrorMessage(message);
     if (message) return;
 
@@ -79,6 +81,9 @@ const Login = () => {
       setCurrentColor(!currentColor)
     )
   }
+  const handleEyeShow = () => {
+    setEyeShow(!eyeShow)
+  }
   return (
     <div>
       <div>
@@ -106,7 +111,7 @@ const Login = () => {
             <input
               ref={email}
               type="text"
-              placeholder="Phone number, or Email"
+              placeholder="Email"
               size={40}
               className=" border-2 border-black p-2 my-3"
               required
@@ -114,24 +119,31 @@ const Login = () => {
 
             <p className="text-red-700">{errorMessage}</p>
 
-            {/* {!isSignInForm && 
+            {/* { {!isSignInForm && 
             <input ref={name} type='text' placeholder='Full name' size={40} className=' border-2 border-black p-2 my-3'/>
             }
             {!isSignInForm &&
               <p className='text-red-500'>{errorMessage}</p>
-            }
+            } */}
             {!isSignInForm && <input type='text' placeholder='Username' size={40} className=' border-2 border-black p-2 my-3'/>}
             {!isSignInForm &&
               <p className='text-red-500'>{errorMessage}</p>
-            } */}
+            } 
 
+            <div className="relative">
             <input
               ref={password}
-              type="password"
+              type={eyeShow == true ? "text" : "password"}
               placeholder="password"
               size={40}
               className="border-2 border-black p-2 my-3"
+
             />
+            <span className="absolute left-80 top-6" onClick={handleEyeShow}>
+            {eyeShow == true ? <i className='fa-solid fa-eye'></i> : <i className='fa-solid fa-eye-slash'></i>}
+            </span>
+            </div>
+            
             <p className="text-red-700">{errorMessage}</p>
             <button
               className="bg-blue-500 px-6  py-2 text-lg flex justify-center w-full  text-white font-bold mx-auto mt-3 rounded-lg"
